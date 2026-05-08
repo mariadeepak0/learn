@@ -21,6 +21,51 @@ import { toast } from "react-toastify";
 
 import { useSession } from "next-auth/react";
 export default function LoginPage() {
+  const{data:session,status}=useSession();
+  const [formData,setFormData]=useState({
+     email: "",
+    password: "",
+    remember: false,
+  });
+  const [loading,setLoading]=useState(false);
+  const router=useRouter();
+  const handleChange=(e)=>{
+    const {name,value,type,checked}=e.target;
+    setFormData((prev)=>({
+      ...prev,
+      [name]:type==="checkbox" ? checked:value,
+    }));
+
+  };
+const handleSubmit=async(e)=>{
+  e.preventDefault();
+  if(!formData.email||!formData.password){
+      toast.error("email and password are  required");
+
+      return;
+  }
+  setLoading(true);
+  try{
+    const result=await signIn("credentials",{
+      redirect:false,
+      email:formData.email,
+      password:formData.password,
+    });
+    if(result?.error){
+      toast.error(result.error);
+    }else{
+      toast.success("login successfull");
+      router.push("/");
+    }
+  }catch(error){
+    toast.error("invalid email and password");
+  }finally{
+    setLoading(false);
+  }
+}
+const handleSocial=(provider)=>{
+   console.log(`sign  in with ${provider}`);
+}
 
 
   return (
