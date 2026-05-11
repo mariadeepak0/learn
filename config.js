@@ -1,7 +1,7 @@
 
 require("dotenv").config()
 
-const DB_URI = process.env.DB_URI;
+const DB_URI=process.env.DB_URI;
 
 const API = process.env.API;
 

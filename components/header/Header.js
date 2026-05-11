@@ -25,7 +25,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import headerStyles from "./headerStyles";
 import WidgetsIcon from "@mui/icons-material/Widgets";
-//import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 import Avatar from "@mui/material/Avatar";
 import LoginIcon from "@mui/icons-material/Login";
@@ -34,7 +34,7 @@ export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up("md"));
-  //const { data: session } = useSession();
+  const { data: session } = useSession();
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -121,14 +121,36 @@ export default function Header() {
               <ShoppingCartOutlinedIcon />
             </IconButton>
    
-          <IconButton
+         
+            {/* ACCOUNT / LOGIN */}
+            {!session ? (
+              // 🔐 NOT LOGGED IN → LOGIN ICON
+              <IconButton
                 aria-label="Login"
                 sx={headerStyles.iconButton}
-               // onClick={() => signIn()}
+                onClick={() => signIn()}
               >
                 <LoginIcon />
               </IconButton>
-            {/* ACCOUNT / LOGIN */}
+            ) : (
+              // ✅ LOGGED IN → USER AVATAR
+              <IconButton
+                aria-label="Account"
+                component={Link}
+                href={`/dashboard/${session?.user?.user_type}`}
+                sx={headerStyles.iconButton}
+              >
+                <Avatar
+                  src={session?.user?.avatar?.url || "/image/img4.jpg"}
+                  alt={session.user?.name || "User"}
+                  sx={{
+                    width: 32,
+                    height: 32,
+                  }}
+                />
+              </IconButton>
+            )}
+
           
             {/* show hamburger on small screens */}
             <IconButton
