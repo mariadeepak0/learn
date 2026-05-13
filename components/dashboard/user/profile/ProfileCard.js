@@ -27,6 +27,20 @@ export default function ProfileCard() {
     profileImage: null,
     });
     const [loading,setLoading]=useState(false);
+    useEffect(()=>{
+      if(session?.user){
+        setValues((prev)=>({
+          ...prev,
+          fullName:session.user.name||"",
+          email:session.user.email ||"",
+          city:session.user.city|| "",
+          address:session.user.address || "",
+           country: session.user.country || "",
+        profileImage: session.user.avatar || null,
+        createdAt: session.user.createdAt,
+        }));
+      }
+    },[session]);
     const handleChange=(e)=>{
         setValues((prev)=>({
             ...prev,
