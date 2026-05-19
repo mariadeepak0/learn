@@ -3,7 +3,6 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import dbConnect from "./dbConnect";
 
-
 export const authOptions={
     session:{
         strategy:"jwt",

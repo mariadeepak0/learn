@@ -57,7 +57,7 @@ const handleSubmit=async(e)=>{
       return;
     }
     try{
-        const res=await fetch(`${process.env.API}/user/change-password`,{
+        const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/change-password`,{
             method:"PUT",
             headers:{
                  "Content-Type": "application/json",

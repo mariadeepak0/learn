@@ -1,9 +1,10 @@
 "use client"
+import AdminLayout from "../../../../components/dashboard/admin/AdminLayout"
 
-export default function Page(){
+export default function AdminPage(){
     return(
         <>
-        <h1>admin dashbord</h1>
+        <AdminLayout/>
         </>
     )
 }
