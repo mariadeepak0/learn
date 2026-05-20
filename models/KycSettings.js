@@ -1,4 +1,4 @@
-import mongoose from './User';
+import mongoose from 'mongoose';
 
 const KycSettingsSechema=new mongoose.schema({
     instructions:{

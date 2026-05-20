@@ -27,6 +27,30 @@ export default function KycSettingsForm() {
     auto_approve: false,
     status: true,
   });
+    useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${process.env.API}/admin/kyc-settings`);
+
+        const data = await res.json();
+
+        if (res.ok && data.data) {
+          setFormData({
+            instructions: data.data.instructions,
+            nid_verification: data.data.nid_verification ?? false,
+            passport_verification: data.data.passport_verification ?? false,
+            auto_approve: data.data.auto_approve ?? false,
+            status: data.data.status ?? true,
+          });
+        }
+      } catch (error) {
+        console.log("failed to load kyc settings", error);
+      }
+    };
+
+ fetchSettings()
+
+  }, []);
   const handleChange=(e)=>{
     const{name,value,type,checked}=e.target;
     setFormData((prev)=>({
@@ -96,14 +120,13 @@ export default function KycSettingsForm() {
             Verification Types
           </Typography>
           <Box sx={kycStyles.switchRow}>
-            <Box sx={kycStyles.switchItem}>
+              <Box sx={kycStyles.switchItem}>
               <Typography>NID Verification</Typography>
               <SwitchInput
-              name="nid_verification"
-              checked={FormData.nid_verification}
-              onChange={handleChange}/>
-              
-
+                name="nid_verification"
+                checked={formData.nid_verification}
+                onChange={handleChange}
+              />
             </Box>
             <Box sx={kycStyles.switchItem}>
               <Typography>Passport Verification</Typography>
