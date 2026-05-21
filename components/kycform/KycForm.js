@@ -54,6 +54,34 @@ export default function KycForm({ userId }) {
   }
     
     const handleSubmit=async(e)=>{
+      e.preventDefault();
+      if(!docType) return toast.error("please select document type");
+      if(!documentNumber)
+        return toast.error("please enter document number");
+      if(!file)
+        return toast.error("please upload document");
+      setLoading(true);
+      const formData=new FormData();
+      formData.append("document",file);
+      formData.append("document_type",docType);
+      formData.append("document_number",documentNumber);
+      formData.append("user_id",userId);
+      try{
+        const res=await fetch(`${process.env.API}/kyc-verification`,{
+          method:"POST",
+          body:formData,
+        });
+        if(!res.ok) throw new Error();
+        toast.success("kyc submitted");
+        setDocType("");
+        setDocumentNumber("");
+        setFile(null);
+        setFileName("");
+      }catch{
+        toast.error("failed to submit");
+      }finally{
+        setLoading(false);
+      }
 
     }
 
