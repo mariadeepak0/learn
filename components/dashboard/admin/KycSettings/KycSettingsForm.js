@@ -30,7 +30,7 @@ export default function KycSettingsForm() {
     useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch(`${process.env.API}/admin/kyc-settings`);
+        const res = await fetch(`/api/admin/kyc-settings`);
 
         const data = await res.json();
 
@@ -70,7 +70,7 @@ export default function KycSettingsForm() {
     e.preventDefault();
     setLoading(true);
     try{
-      const res=await fetch(`${process.env.API}/admin/kyc-settings`,{
+      const res=await fetch(`/api/admin/kyc-settings`,{
         method:"POST",
         headers:{
             "Content-Type": "applivation/json",

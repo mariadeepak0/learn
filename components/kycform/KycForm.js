@@ -67,7 +67,7 @@ export default function KycForm({ userId }) {
       formData.append("document_number",documentNumber);
       formData.append("user_id",userId);
       try{
-        const res=await fetch(`${process.env.API}/kyc-verification`,{
+        const res=await fetch(`/api/kyc-verification`,{
           method:"POST",
           body:formData,
         });

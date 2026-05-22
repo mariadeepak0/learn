@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const KycSettingsSechema=new mongoose.schema({
+const KycSettingsSechema=new mongoose.Schema({
     instructions:{
         type:String,
         default:null,

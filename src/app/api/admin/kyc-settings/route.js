@@ -27,7 +27,7 @@ export async function POST(req){
     }
 }
 
-export async function Get(){
+export async function GET(){
    try{
       await dbConnect();
       const settings=await KycSettings.findOne();
