@@ -22,6 +22,8 @@ const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
 const CLIENT_URL = process.env.CLIENT_URL;
+const GMAIL_USER = process.env.GMAIL_USER;
+const GMAIL_APP_PASS = process.env.GMAIL_APP_PASS;
 
 module.exports={
      DB_URI,
@@ -39,4 +41,6 @@ module.exports={
 
   PAYPAL_CLIENT_SECRET,
   CLIENT_URL,
+   GMAIL_USER,
+  GMAIL_APP_PASS,
 }

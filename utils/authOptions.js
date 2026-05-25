@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import dbConnect from "./dbConnect";
+import KycVerification from "../models/KycVerification";
 
 export const authOptions={
     session:{
@@ -47,8 +48,14 @@ export const authOptions={
             if(userByEmail){
                 userByEmail.password=undefined;
 
+                const kyc=await KycVerification.findOne({
+                    user_id:userByEmail._id,
+                }).select("status")
+
                 token.user={
                     ...userByEmail.toObject(),
+                    kyc_verification_status:kyc?.status?? null,
+
 
                 };
             }

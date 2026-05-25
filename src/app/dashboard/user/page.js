@@ -7,7 +7,7 @@ import {
   AttachMoney as AttachMoneyIcon,
 } from "@mui/icons-material";
 import dashboardStyles from "./dashboardStyles";
-//import KycPending from "./KycPendingAlert";
+import KycPending from "./KycPendingAlert";
 export default function DashboardPage() {
   const dummyData = { purchases: 6, reviews: 8, totalSpent: 34711 };
 
@@ -17,6 +17,7 @@ export default function DashboardPage() {
         <Typography variant="h5" sx={dashboardStyles.headerTitle}>
           Welcome back!
         </Typography>
+        <KycPending/>
        
 
         <Grid container spacing={3}>

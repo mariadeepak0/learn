@@ -34,6 +34,8 @@ const nextConfig = {
 
     PAYPAL_CLIENT_SECRET: config.PAYPAL_CLIENT_SECRET,
     CLIENT_URL: config.CLIENT_URL,
+     GMAIL_USER: config.GMAIL_USER,
+    GMAIL_APP_PASS: config.GMAIL_APP_PASS,
   },
 };
 

@@ -13,6 +13,7 @@ export const config={
      "/api/admin/:path*",
      "/api/author/:path*",
      "/api/reviewer/:path*",
+       "/kyc",
 
       "/login",
     "/register",
@@ -47,6 +48,19 @@ export default withAuth(
     }
      if (pathname.startsWith("/dashboard/reviewer") && role !== "reviewer") {
       return NextResponse.redirect(new URL("/", req.url));
+    }
+     if (pathname === "/kyc" && role === "user") {
+      const kycVerificationStatus =
+        token?.user?.kyc_verification_status;
+
+      if (
+        kycVerificationStatus === "pending" ||
+        kycVerificationStatus === "approved"
+      ) {
+        return NextResponse.redirect(
+          new URL("/dashboard/user", req.url)
+        );
+      }
     }
 
     return NextResponse.next();
