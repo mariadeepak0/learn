@@ -37,7 +37,7 @@ const KycRequestsTable = () => {
     useEffect(()=>{
         const fetchKycRequests=async()=>{
             try{
-                const res=await fetch(`${process.env.API}/admin/kyc-request`);
+                const res=await fetch(`/api/admin/kyc-request`);
                 const result=await res.json();
                 if(result.success){
                     setData(result.data);
