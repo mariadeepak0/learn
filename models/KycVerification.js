@@ -30,4 +30,5 @@ const KycVerficationSchema= new mongoose.Schema({
     timestamps:true,
 },
 );
-export default mongoose.models.KycVerification||mongoose.model("KycVerfication",KycVerficationSchema);
+export default mongoose.models.KycVerification || 
+mongoose.model("KycVerification", KycVerficationSchema);
