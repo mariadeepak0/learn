@@ -53,7 +53,7 @@ export const createCategory=createAsyncThunk(
     "categories/createCategory",
     async(categoryData,{rejectWithValue})=>{
         try{
-            const res=await fetch(`${process.env.API}/admin/categories`,{
+            const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/categories`,{
                 method:"POST",
                 headers:{ "Content-Type": "application/json" },
                 body:JSON.stringify(categoryData),

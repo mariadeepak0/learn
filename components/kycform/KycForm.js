@@ -28,7 +28,7 @@ export default function KycForm({ userId }) {
   useEffect(()=>{
     const fetchSettings=async()=>{
         try{
-            const res=await fetch(`${process.env.API}/admin/kyc-settings`);
+            const res=await fetch("api/admin/kyc-settings");
             const data=await res.json();
             if(res.ok && data?.data){
                 const options=[];
@@ -67,7 +67,7 @@ export default function KycForm({ userId }) {
       formData.append("document_number",documentNumber);
       formData.append("user_id",userId);
       try{
-        const res=await fetch(`/api/kyc-verfication`,{
+        const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/kyc-verification`,{
           method:"POST",
           body:formData,
         });

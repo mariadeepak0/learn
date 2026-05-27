@@ -8,6 +8,7 @@ export async function POST(req){
         await dbConnect();
         const body=await req.json();
          console.log("category======>", body);
+         
          if(!body.categort_name||!body.file_types?.length){
             return NextResponse.json(
         {

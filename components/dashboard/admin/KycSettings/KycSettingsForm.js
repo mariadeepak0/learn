@@ -70,7 +70,7 @@ export default function KycSettingsForm() {
     e.preventDefault();
     setLoading(true);
     try{
-      const res=await fetch(`/api/admin/kyc-settings`,{
+      const res=await fetch("/api/admin/kyc-settings",{
         method:"POST",
         headers:{
             "Content-Type": "applivation/json",

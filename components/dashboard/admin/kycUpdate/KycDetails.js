@@ -62,7 +62,7 @@ const KycDetails = () => {
     }
     setUpdating(true);
     try{
-      const res=await fetch(`${process.env.API}/admin/kyc-request/${id}`,{
+      const res=await fetch(`/api/admin/kyc-request/${id}`,{
         method:"PUT",
         headers:{
            "Content-Type": "application/json",

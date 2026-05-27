@@ -20,15 +20,19 @@ const geistMono = Geist_Mono({
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import Banner from "../../components/banner/BannerBar"
+import {Provider} from "react-redux"
+import {store} from "./store"
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <SessionProvider>
+        <Provider store={store}>
       <body>
         <Banner/>
         <ToastContainer/>
         {children}
         </body>
+        </Provider>
         </SessionProvider>
     </html>
   );
