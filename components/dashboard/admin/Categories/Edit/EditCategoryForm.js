@@ -84,9 +84,14 @@ const EditCategoryForm = () => {
         e.preventDefault();
         const result=await dispatch(
             updateCategory({
+              id:categoryId,
+              categoryData:formData,
                 
-            })
-        )
+            }),
+        );
+        if(updateCategory.fulfilled.match(result)){
+           router.push("/dashboard/admin/categories/list");
+        }
     }
  
 

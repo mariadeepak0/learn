@@ -29,8 +29,9 @@ export const menuItems = [
     icon: <CategoryIcon />,
 
     children: [
-      { label: "Create", path: "/dashboard/admin/categories/create" },
+     // { label: "Create", path: "/dashboard/admin/categories/create" },
       { label: "List", path: "/dashboard/admin/categories/list" },
+         { label: "SubCategories", path: "/dashboard/admin/subcategories/create" },
     ],
   },
   {
