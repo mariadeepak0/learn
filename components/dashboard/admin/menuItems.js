@@ -31,7 +31,7 @@ export const menuItems = [
     children: [
      // { label: "Create", path: "/dashboard/admin/categories/create" },
       { label: "List", path: "/dashboard/admin/categories/list" },
-         { label: "SubCategories", path: "/dashboard/admin/subcategories/create" },
+         { label: "SubCategories", path: "/dashboard/admin/subcategories/list" },
     ],
   },
   {

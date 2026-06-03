@@ -5,7 +5,7 @@ export const fetchCategoryById=createAsyncThunk(
     'categories/fetchCategoryById',
     async(id)=>{
         try{
-            const response=await fetch(`${process.env.API}/admin/categories/${id}`);
+            const response=await fetch(`/api/admin/categories/${id}`);
             if(!response.ok){
                 throw new Error('failed to fetch category');
             }
@@ -21,7 +21,7 @@ export const fetchCategories=createAsyncThunk(
     "categories/fetchCategories",
     async()=>{
         try{
-              const response = await fetch(`${process.env.API}/admin/categories`);
+              const response = await fetch(`/api/admin/categories`);
               if(!response.ok){
                  throw new Error(`Failed to fetch categories`);
               }
@@ -37,7 +37,7 @@ export const fetchHomeCategories = createAsyncThunk(
   "categories/fetchHomeCategories",
   async () => {
     try {
-      const response = await fetch(`${process.env.API}/categories`);
+      const response = await fetch(`/api/categories`);
       if (!response.ok) {
         throw new Error(`Failed to fetch categories`);
       }
@@ -53,7 +53,7 @@ export const createCategory=createAsyncThunk(
     "categories/createCategory",
     async(categoryData,{rejectWithValue})=>{
         try{
-            const res=await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/categories`,{
+            const res=await fetch(`/api/admin/categories`,{
                 method:"POST",
                 headers:{ "Content-Type": "application/json" },
                 body:JSON.stringify(categoryData),
@@ -77,7 +77,7 @@ export const updateCategory = createAsyncThunk(
 
 
     try {
-      const response = await fetch(`${process.env.API}/admin/categories/${id}`, {
+      const response = await fetch(`/api/admin/categories/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(categoryData),
@@ -103,7 +103,7 @@ export const deleteCategory = createAsyncThunk(
 
 
     try {
-      const response = await fetch(`${process.env.API}/admin/categories/${id}`, {
+      const response = await fetch(`/api/admin/categories/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

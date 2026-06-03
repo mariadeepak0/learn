@@ -6,7 +6,7 @@ export const fetchSubcategoryById = createAsyncThunk(
   async (id) => {
     try {
       const response = await fetch(
-        `${process.env.API}/admin/subcategories/${id}`,
+        `/api/admin/subcategories/${id}`,
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch subcategory:`);
@@ -24,7 +24,7 @@ export const fetchSubcategories = createAsyncThunk(
   "subcategories/fetchSubcategories",
   async () => {
     try {
-      const response = await fetch(`${process.env.API}/admin/subcategories`);
+      const response = await fetch(`api/admin/subcategories`);
       if (!response.ok) {
         throw new Error(`Failed to fetch subcategories`);
       }
@@ -56,7 +56,7 @@ export const createSubcategory = createAsyncThunk(
   "subcategories/createSubcategory",
   async (subcategoryData, { rejectWithValue }) => {
     try {
-      const res = await fetch(`${process.env.API}/admin/subcategories`, {
+      const res = await fetch(`/api/admin/subcategories`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(subcategoryData),
@@ -80,7 +80,7 @@ export const updateSubcategory = createAsyncThunk(
   async ({ id, subcategoryData }) => {
     try {
       const response = await fetch(
-        `${process.env.API}/admin/subcategories/${id}`,
+        `/api/admin/subcategories/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -107,7 +107,7 @@ export const deleteSubcategory = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `${process.env.API}/admin/subcategories/${id}`,
+        `/api/admin/subcategories/${id}`,
         {
           method: "DELETE",
         },
