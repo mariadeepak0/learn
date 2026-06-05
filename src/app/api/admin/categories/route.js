@@ -9,7 +9,7 @@ export async function POST(req){
         const body=await req.json();
          console.log("category======>", body);
          
-         if(!body.categort_name||!body.file_types?.length){
+         if(!body.category_name||!body.file_types?.length){
             return NextResponse.json(
         {
           message: "Category name and  file types are required",
@@ -20,8 +20,8 @@ export async function POST(req){
       );
          }
          const category=await Category.create({
-            name:body.categort_name,
-            slug:slugify(body.categort_name,{lower:true}),
+            name:body.category_name,
+            slug:slugify(body.category_name,{lower:true}),
             fileTypes:body.file_types,
             show_at_featured: body.show_at_featured ?? false,
       show_at_nav: body.show_at_nav ?? false,
