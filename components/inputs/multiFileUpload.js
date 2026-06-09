@@ -22,13 +22,9 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import VideoFileIcon from "@mui/icons-material/VideoFile";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-
 import axios from "axios";
 import inputStyles from "./inputStyles";
 
-/* ===============================
-   ClientOnly
-================================ */
 function ClientOnly({ children }) {
   const [mounted, setMounted] = useState(false);
 
@@ -39,8 +35,6 @@ function ClientOnly({ children }) {
   if (!mounted) return null;
   return children;
 }
-
-/* ================= FILE ICON MAP ================= */
 const FILE_ICON_MAP = {
   jpg: { icon: ImageIcon, color: "#10b981" },
   jpeg: { icon: ImageIcon, color: "#10b981" },
@@ -67,28 +61,21 @@ const FILE_ICON_MAP = {
 
   txt: { icon: InsertDriveFileIcon, color: "#6b7280" },
 };
-
-/* ================= HELPER ================= */
 const getFileIcon = (file) => {
   const ext = file.extension || file.name?.split(".").pop()?.toLowerCase();
   const config = FILE_ICON_MAP[ext];
   if (!config) return { Icon: InsertDriveFileIcon, color: "#6b7280" };
   return { Icon: config.icon, color: config.color };
 };
-
-/* ================= UPLOAD TEXT HELPER ================= */
 const getUploadText = (extensions = []) => {
   if (!extensions.length) {
     return "Upload image, video, audio, zip, pdf, etc.";
   }
-
   const image = ["jpg", "jpeg", "png", "bmp"];
   const video = ["mp4", "mov", "avi", "webm"];
   const audio = ["mp3", "wav", "ogg", "m4a"];
   const archive = ["zip", "rar"];
-
   const parts = [];
-
   if (extensions.some((e) => image.includes(e))) parts.push("Image");
   if (extensions.some((e) => video.includes(e))) parts.push("Video");
   if (extensions.some((e) => audio.includes(e))) parts.push("Audio");
@@ -98,7 +85,7 @@ const getUploadText = (extensions = []) => {
   return ` Drag & Drop,   Upload|| ${parts.join(", ")} files`;
 };
 
-/* ================= COMPONENT ================= */
+
 const MultiImageUploadInput = ({
   label = "Upload Files",
   value = [],
@@ -135,7 +122,7 @@ const MultiImageUploadInput = ({
     formData.append("categoryId", categoryId);
 
     const res = await axios.post(
-      `${process.env.API}/author/files/file`,
+      `/api/author/files/file`,
       formData,
       {
         onUploadProgress: (e) => {
@@ -151,18 +138,14 @@ const MultiImageUploadInput = ({
 
     return res.data;
   };
-
- 
  const handleFiles = async (files) => {
     if (!categoryId || !allowedExtensions.length) {
       showError("Please select a category first");
       return;
     }
-
     const fileArray = Array.from(files);
     const validFiles = [];
     const invalidFiles = [];
-
     fileArray.forEach((file) => {
       const ext = file.name.split(".").pop()?.toLowerCase();
       if (allowedExtensions.includes(ext)) {
@@ -216,7 +199,7 @@ const MultiImageUploadInput = ({
 
 
   const handleRemove = async (file) => {
-    await fetch(`${process.env.API}/author/files/delete`, {
+    await fetch(`/api/author/files/delete`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -239,8 +222,6 @@ const MultiImageUploadInput = ({
 
   return (
     <ClientOnly>
-
-
       <Box sx={getStyles()}>
         <input
           type="file"

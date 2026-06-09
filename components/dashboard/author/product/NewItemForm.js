@@ -23,7 +23,7 @@ import Button from "../../../inputs/Button";
 import TextInput from "../../../inputs/TextInput";
 import CategoryAttributes from "./CategoryAttributes";
 import styles from "./newItemStyles";
-//import FilesSection from "./FilesSection";
+import FilesSection from "./FilesSection";
 //import SupportPricingSection from "./SupportPricingSection";
 import { fetchCategories } from "../../../../slice/categorySlice";
 import { fetchSubcategories } from "../../../../slice/subcategorySlice";
@@ -79,7 +79,21 @@ const NewItemForm = ({mode="create",itemId=null,current=null}) => {
   ? s.category_id===categoryId
   :s.category_id?._id===categoryId
 );
- 
+ useEffect(()=>{
+  if(!categoryId) return;
+  const fetchUploadedFiles=async()=>{
+    const res=await axios.get(`/api/author/files/file`,{
+      params:{categoryId},
+    });
+    setUploadedFiles(
+      res.data.map((f)=>({
+        ...f,
+        progress:100,
+      })),
+    );
+  };
+  fetchUploadedFiles()
+ },[categoryId])
 
  const generateDescriptionWithAI=async()=>{
   if(!name || !categoryId) return;
@@ -110,6 +124,48 @@ const NewItemForm = ({mode="create",itemId=null,current=null}) => {
  };
 const handleSubmit=async(e)=>{
     e.preventDefault();
+
+    const payload={
+      name,
+      description,
+      category_id:categoryId,
+      subcategory_id:subCategoryId,
+      version,
+      demo_link:demoLink,
+      tags,
+      preview_type: previewType,
+      preview_image: null,
+      preview_video: null,
+      preview_audio: null,
+      main_file:null,
+      main_files:[],
+      is_main_file_external:false,
+      screenshots,
+      supported,
+      support_instructions: supportMessage,
+      regularPrice: regularPrice,
+      discount_price: discountPrice,
+      is_free:isFree==="yes",
+      reviewer_message: reviewerMessage,
+
+    };
+    if(previewType==="image"){
+      payload.preview_image=previewFiles;
+    }
+     if (previewType === "video") {
+      payload.preview_video = previewFiles;
+    }
+    if (previewType === "audio") {
+      payload.preview_audio = previewFiles;
+    }
+     if (mainFileType === "link") {
+      payload.main_file = mainFileLink;
+      payload.is_main_file_external = true;
+    }
+    if (mainFileType === "upload") {
+      payload.main_files = mainFileUpload;
+      payload.is_main_file_external = false;
+    }
 }
 
 
@@ -193,6 +249,25 @@ const handleSubmit=async(e)=>{
       onDemoLinkChange={(e)=>setDemoLink(e.target.value)}
       onTagsChange={(newTags)=>setTags(newTags)}
       />
+      <FilesSection
+        categoryId={categoryId}
+        categories={categories}
+        previewType={previewType}
+        previewFiles={previewFiles}
+        mainFileType={mainFileType}
+        mainFileLink={mainFileLink}
+        mainFileUpload={mainFileUpload}
+        screenshots={screenshots}
+        onPreviewTypeChange={(e) => setPreviewType(e.target.value)}
+        onPreviewFilesChange={(e) => setPreviewFiles(e.target.value)}
+        onMainFileTypeChange={(e) => setMainFileType(e.target.value)}
+        onMainFileLinkChange={(e) => setMainFileLink(e.target.value)}
+        onMainFileUploadChange={(e) => setMainFileUpload(e.target.value)}
+        onScreenshotsChange={(e) => setScreenshots(e.target.value)}
+        uploadedFiles={uploadedFiles}
+        onUploadedFilesChange={(files) => setUploadedFiles(files)}
+      />
+
       <Box sx={styles.actions}>
         <Button onClick={handleSubmit}>Save Item</Button>
 
