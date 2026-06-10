@@ -24,13 +24,13 @@ import TextInput from "../../../inputs/TextInput";
 import CategoryAttributes from "./CategoryAttributes";
 import styles from "./newItemStyles";
 import FilesSection from "./FilesSection";
-//import SupportPricingSection from "./SupportPricingSection";
+import SupportPricingSection from "./SupportPricingSection";
 import { fetchCategories } from "../../../../slice/categorySlice";
 import { fetchSubcategories } from "../../../../slice/subcategorySlice";
-//import FreeItemReviewerSection from "./FreeItemReviewerSection";
+import FreeItemReviewerSection from "./FreeItemReviewerSection";
 import { runAi } from "../../../../ai/Ai";
 import axios from "axios";
-import { createAuthorItem } from "../../../../slice/authorItemSlice";
+import { createAuthorItem, updateAuthorItem } from "../../../../slice/authorItemSlice";
 import categoriesStyles from "../../../categories/categoriesStyles";
 
 const NewItemForm = ({mode="create",itemId=null,current=null}) => {
@@ -94,6 +94,56 @@ const NewItemForm = ({mode="create",itemId=null,current=null}) => {
   };
   fetchUploadedFiles()
  },[categoryId])
+
+  useEffect(() => {
+    if (mode === "edit" && current) {
+      setName(current.name || "");
+
+      setDescription(current.description || "");
+
+      setCategoryId(
+        typeof current.category_id === "string"
+          ? current.category_id
+          : current.category_id?._id,
+      );
+
+      setSubCategoryId(
+        typeof current.sub_category_id === "string"
+          ? current.sub_category_id
+          : current.sub_category_id?._id || "",
+      );
+
+      setVersion(current.version || "");
+
+      setDemoLink(current.demo_link || "");
+
+      setTags(current.tags || []);
+
+      setPreviewType(current.preview_type || "");
+
+      setPreviewFiles(
+        current.preview_image || current.preview_audio || current.preview_video,
+      );
+
+      setMainFileUpload(current.main_files || []);
+
+      setScreenshots(current.screenshots || []);
+
+      setSupported(current.is_supported ? "yes" : "no");
+
+      setSupportMessage(current.support_instructions);
+
+      setRegularPrice(current.price || "");
+      setDiscountPrice(current.discount_price || "");
+
+      setIsFree(current.is_free ? "yes" : "no");
+
+      setStatus(current?.status || "");
+
+      setReviewerMessage(current.reviewer_message);
+    }
+  }, [mode, current]);
+
 
  const generateDescriptionWithAI=async()=>{
   if(!name || !categoryId) return;
@@ -166,6 +216,22 @@ const handleSubmit=async(e)=>{
       payload.main_files = mainFileUpload;
       payload.is_main_file_external = false;
     }
+    let result;
+    if(mode==="edit"){
+      result=await dispatch(
+        updateAuthorItem({
+          id:itemId,
+          itemData:payload,
+        }),
+      );
+    }else{
+      result=await dispatch(createAuthorItem(payload));
+    }
+    if(createAuthorItem.fulfilled.match(result)||
+  updateAuthorItem.fulfilled.match(result)){
+    router.push("/dashboard/author/products")
+  }
+  console.log(" FINAL PAYLOAD", payload);
 }
 
 
@@ -266,6 +332,22 @@ const handleSubmit=async(e)=>{
         onScreenshotsChange={(e) => setScreenshots(e.target.value)}
         uploadedFiles={uploadedFiles}
         onUploadedFilesChange={(files) => setUploadedFiles(files)}
+      />
+       <SupportPricingSection
+        supported={supported}
+        regularPrice={regularPrice}
+        discountPrice={discountPrice}
+        supportMessage={supportMessage}
+        onSupportedChange={(e) => setSupported(e.target.value)}
+        onRegularPriceChange={(e) => setRegularPrice(e.target.value)}
+        onDiscountPriceChange={(e) => setDiscountPrice(e.target.value)}
+        onSupportMessageChange={(e) => setSupportMessage(e.target.value)}
+      />
+       <FreeItemReviewerSection
+        isFree={isFree}
+        reviewerMessage={reviewerMessage}
+        onIsFreeChange={(e) => setIsFree(e.target.value)}
+        onReviewerMessageChange={(e) => setReviewerMessage(e.target.value)}
       />
 
       <Box sx={styles.actions}>

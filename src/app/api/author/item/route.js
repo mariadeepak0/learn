@@ -4,7 +4,7 @@ import Item from "../../../../../models/Item";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from './../../../../../utils/authOptions';
 import slugify from "slugify";
-import ItemHistory from "../../../../../models/ItemHistory";
+//import ItemHistory from "../../../../../models/ItemHistory";
 
 export async function POST(req){
     try{
@@ -83,13 +83,13 @@ export async function POST(req){
 
 
         });
-        await ItemHistory.create({
-            author_id: session.user._id,
-      item_id: newitem._id,
-      title: "Initial Submission",
-      body: reviewer_message,
-      status: "pending",
-        });
+        //await ItemHistory.create({
+          //  author_id: session.user._id,
+      //item_id: newitem._id,
+      //title: "Initial Submission",
+      //body: reviewer_message,
+      //status: "pending",
+        //});
         console.log("newItem===>", newitem);
           return NextResponse.json(
       newitem,

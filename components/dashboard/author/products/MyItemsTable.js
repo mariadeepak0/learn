@@ -135,6 +135,54 @@ export default function MyItemsTable() {
     const isSmallScreen=useMediaQuery(theme.breakpoints.down("sm"));
     const isExtraSmall=useMediaQuery(theme.breakpoints.down(400));
     const responsive=responsiveStyles(isSmallScreen,isExtraSmall);
+    useEffect(()=>{
+      const fetchItems=async()=>{
+        try{
+          const res=await fetch(`/api/author/item`);
+          const json=await res.json();
+          const list=Array.isArray(json.items)?json.items:[];
+          const formatted=list.map((item)=>{
+            let priceDisplay="free";
+            if(!item.is_free && item.price >0){
+              if(item.discount_price && item.discount_price>0){
+                priceDisplay={
+                  regular:item.price,
+                  discount:item.discount_price,
+                };
+              }else{
+                priceDisplay={
+                  regular:item.price,
+                };
+              }
+              return{
+                id:item._id,
+                title:item.name,
+                category:`${item.category_id?.name}/ ${item.sub_category_id?.name}` ||
+                "_",
+                price:priceDisplay,
+                publishDate:new Date(item.createdAt).toLocaleDateString(
+                  "en-US",
+                  {
+                    month:"short",
+                    day:"2-digit",
+                    year:"numeric",
+                  },
+                ),
+                status:item.status,
+                thumbnail:item.preview_image,
+                previewType:item.preview_type,
+              };
+
+            }
+          });
+          setitems(formatted)
+        }catch(error){
+          console.log("failed to fetch items");
+        setitems([]);
+        }
+      };
+      fetchItems();
+    },[])
  
 
   return (

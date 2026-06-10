@@ -5,7 +5,7 @@ export const fetchAuthorItemById = createAsyncThunk(
   "authorItems/fetchAuthorItemById",
   async (id) => {
     try {
-      const response = await fetch(`${process.env.API}/author/item/${id}`);
+      const response = await fetch(`/api/author/item/${id}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch items:`);
       }
@@ -22,7 +22,7 @@ export const fetchAuthorItems = createAsyncThunk(
   "authorItems/fetchAuthorItems",
   async () => {
     try {
-      const response = await fetch(`${process.env.API}/author/item`);
+      const response = await fetch(`/api/author/item`);
       if (!response.ok) {
         throw new Error(`Failed to fetch items`);
       }
@@ -38,7 +38,7 @@ export const fetchHomeItems = createAsyncThunk(
   "authorItems/fetchHomeItems",
   async () => {
     try {
-      const response = await fetch(`${process.env.API}/item`);
+      const response = await fetch(`/api/item`);
       if (!response.ok) {
         throw new Error(`Failed to fetch items`);
       }
@@ -54,7 +54,7 @@ export const createAuthorItem = createAsyncThunk(
   "authorItems/createAuthorItem",
   async (itemData, { rejectWithValue }) => {
     try {
-      const res = await fetch(`${process.env.API}/author/item`, {
+      const res = await fetch(`/api/author/item`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemData),
@@ -77,7 +77,7 @@ export const updateAuthorItem = createAsyncThunk(
   "authorItems/updateAuthorItem",
   async ({ id, itemData }) => {
     try {
-      const response = await fetch(`${process.env.API}/author/item/${id}`, {
+      const response = await fetch(`/api/author/item/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemData),
@@ -99,7 +99,7 @@ export const deleteAuthorItem = createAsyncThunk(
   "authorItems/deleteAuthorItem",
   async (id) => {
     try {
-      const response = await fetch(`${process.env.API}/author/item/${id}`, {
+      const response = await fetch(`/api/author/item/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
